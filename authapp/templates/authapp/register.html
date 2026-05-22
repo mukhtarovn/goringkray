@@ -1,0 +1,26 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<meta name="description" content="Горный край. Регистрация пользователя"/>
+
+<div class="auth-form-page">
+    <div class="auth-form-header">
+        <h1>Регистрация</h1>
+        <p>Создайте аккаунт, чтобы оформлять заказы и управлять профилем.</p>
+    </div>
+
+    <form class="auth-form-custom" action="{% url 'auth:register' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ register_form.as_p }}
+
+        <div class="auth-buttons">
+            <input class="btn auth-btn-primary" type="submit" value="Регистрация">
+        </div>
+
+        <div class="auth-links auth-links-center">
+            <a href="{% url 'auth:login' %}">Уже есть аккаунт? Войти</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

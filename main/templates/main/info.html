@@ -1,0 +1,259 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block menu %}
+<div class="hero privacy-hero">
+    <div class="header clearfix">
+        <a class="logo">Горный край</a>
+        {% include 'main/inc/inc_main_menu.html' %}
+    </div>
+
+    <div class="privacy-header text-center">
+        <h1>Политика конфиденциальности</h1>
+        <p>Информация о защите персональных данных пользователей сайта</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .privacy-page {
+        padding: 60px 0;
+        background: #f8f9fc;
+    }
+
+    .privacy-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    }
+
+    .privacy-header {
+        padding: 70px 20px 40px;
+        color: #fff;
+    }
+
+    .privacy-header h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .privacy-header p {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .privacy-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #4544cc;
+        text-align: center;
+    }
+
+    .privacy-section {
+        margin-bottom: 45px;
+    }
+
+    .privacy-section h2 {
+        font-size: 24px;
+        color: #4544cc;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #fec80e;
+        display: inline-block;
+    }
+
+    .privacy-section p {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #555;
+        margin-bottom: 18px;
+        text-align: justify;
+    }
+
+    .privacy-section ul {
+        padding-left: 20px;
+    }
+
+    .privacy-section li {
+        margin-bottom: 12px;
+        line-height: 1.7;
+        color: #555;
+    }
+
+    <div class="privacy-highlight" style="
+    background: #e8f8ec;
+    border-left: 5px solid #5bbf75;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+">
+
+    @media (max-width: 768px) {
+
+        .privacy-container {
+            padding: 30px 20px;
+            border-radius: 0;
+        }
+
+        .privacy-header h1 {
+            font-size: 30px;
+        }
+
+        .privacy-title {
+            font-size: 26px;
+        }
+
+        .privacy-section h2 {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<div class="privacy-page">
+    <div class="privacy-container">
+
+        <h2 class="privacy-title">Политика конфиденциальности</h2>
+<div class="privacy-section">
+    <h2>Доставка и оплата</h2>
+
+    <div class="privacy-highlight">
+        <h3 style="margin-bottom: 15px; color: #4544cc;">Доставка</h3>
+
+        <p>
+            В пределах района «Скандинавия» (север, центр, юг):
+        </p>
+
+        <ul>
+            <li>
+                при покупке товара свыше 2 000 рублей — <strong>бесплатно</strong>;
+            </li>
+            <li>
+                при покупке товара до 2 000 рублей включительно —
+                <strong>150 рублей</strong>.
+            </li>
+        </ul>
+
+        <p>
+            По другим районам Москвы доставка осуществляется
+            по тарифам «Яндекс-Доставка».
+        </p>
+
+        <h3 style="margin: 30px 0 15px; color: #4544cc;">Оплата</h3>
+
+        <ul>
+            <li>банковский терминал;</li>
+            <li>наличные.</li>
+        </ul>
+
+        <p style="margin-top: 25px;">
+            <strong>
+                Стоимость весового товара (мясо цыпленка,
+                колбасные изделия) может незначительно отличаться
+                от стоимости, указанной в каталоге,
+                и зависит от веса конкретного продукта.
+            </strong>
+        </p>
+    </div>
+</div>
+        <div class="privacy-highlight">
+            Настоящая Политика конфиденциальности определяет порядок обработки
+            и защиты персональных данных пользователей сайта.
+        </div>
+
+        <div class="privacy-section">
+            <h2>1. Общие положения</h2>
+
+            <p>
+                Настоящая Политика конфиденциальности действует в отношении всей информации,
+                которую интернет-магазин может получить о Пользователе во время использования сайта.
+            </p>
+
+            <p>
+                Использование сайта означает согласие Пользователя с настоящей Политикой
+                конфиденциальности и условиями обработки персональных данных.
+            </p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>2. Персональные данные</h2>
+
+            <p>
+                Под персональными данными понимается любая информация,
+                относящаяся к прямо или косвенно определенному физическому лицу.
+            </p>
+
+            <ul>
+                <li>Фамилия, имя, отчество</li>
+                <li>Контактный телефон</li>
+                <li>Адрес электронной почты</li>
+                <li>Адрес доставки</li>
+                <li>IP-адрес и cookies</li>
+            </ul>
+        </div>
+
+        <div class="privacy-section">
+            <h2>3. Цели обработки данных</h2>
+
+            <p>
+                Персональные данные используются исключительно для:
+            </p>
+
+            <ul>
+                <li>оформления и обработки заказов;</li>
+                <li>обратной связи с пользователем;</li>
+                <li>предоставления технической поддержки;</li>
+                <li>улучшения качества обслуживания;</li>
+                <li>информирования о заказах и услугах.</li>
+            </ul>
+        </div>
+
+        <div class="privacy-section">
+            <h2>4. Защита информации</h2>
+
+            <p>
+                Администрация сайта принимает необходимые организационные
+                и технические меры для защиты персональной информации
+                Пользователей от неправомерного доступа, изменения,
+                раскрытия или уничтожения.
+            </p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>5. Cookies</h2>
+
+            <p>
+                Сайт использует cookies для корректной работы,
+                анализа посещаемости и улучшения пользовательского опыта.
+            </p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>6. Передача данных третьим лицам</h2>
+
+            <p>
+                Персональные данные могут передаваться третьим лицам
+                исключительно для выполнения заказа Пользователя,
+                включая службы доставки и платежные системы.
+            </p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>7. Контактная информация</h2>
+
+            <p>
+                По всем вопросам, связанным с обработкой персональных данных,
+                вы можете связаться с администрацией сайта через форму обратной связи.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

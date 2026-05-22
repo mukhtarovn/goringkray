@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}
+            {{ title|upper }}
+        {% endblock %}
+    </title>
+
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Orelega+One&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    {% endblock %}
+</head>
+<body class="site-body">
+
+    <div class="hero-white">
+        <div class="top-bar">
+            <div class="logo-left">
+                <a href="/">
+                    <img src="{% static 'img/gorniy_kray_logo.png' %}" alt="Горный край">
+                </a>
+            </div>
+
+            <nav class="main-nav">
+                <ul class="main-nav-list">
+                    <li><a href="/">На сайт</a></li>
+                    <li><a href="/admin/">Django Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <main class="site-main">
+        <div class="site-container">
+            <div class="admin-shell">
+                <div class="admin-header-card">
+                    <h1 class="admin-title">Админка</h1>
+                    <p class="admin-subtitle">Управление каталогом, товарами, категориями и содержимым сайта.</p>
+                </div>
+
+                <div class="admin-layout">
+                    <aside class="admin-sidebar-card">
+                        {% block menu %}
+                            <div class="admin-menu-wrap">
+                                {% include 'adminapp/includes/inc_menu.html' %}
+                            </div>
+                        {% endblock %}
+                    </aside>
+
+                    <section class="admin-content-card">
+                        {% block content %}
+                        {% endblock %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

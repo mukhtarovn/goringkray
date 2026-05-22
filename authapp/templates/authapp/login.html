@@ -1,0 +1,33 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<meta name="description" content="Горный край. Аутентификация пользователя. Вход"/>
+
+<div class="auth-form-page">
+    <div class="auth-form-header">
+        <h1>Вход в аккаунт</h1>
+        <p>Введите логин и пароль, чтобы войти в личный кабинет.</p>
+    </div>
+
+    <form method="post" class="auth-form-custom">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+
+        <label class="auth-check">
+            <input type="checkbox" value="remember-me">
+            <span>Запомнить</span>
+        </label>
+
+        <div class="auth-buttons">
+            <button class="btn auth-btn-primary" type="submit">Вход</button>
+            <a href="{% url 'auth:anonym' %}" class="btn auth-btn-warning">Заказ без регистрации</a>
+        </div>
+
+        <div class="auth-links">
+            <a href="{% url 'authapp:register' %}">Регистрация</a>
+            <a href="{% url 'main' %}">На главную</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

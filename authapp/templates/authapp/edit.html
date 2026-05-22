@@ -1,0 +1,33 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<meta name="description" content="Горный край. Изменить данные пользователя"/>
+
+<div class="profile-edit-page">
+    <div class="profile-edit-header">
+        <h1>Редактирование профиля</h1>
+        <p>Обновите личные данные, фото и информацию аккаунта.</p>
+    </div>
+
+    <div class="profile-avatar-wrap">
+        {% if user.avatar %}
+            <img src="/media/{{ user.avatar }}" alt="Аватар пользователя" class="profile-avatar-img">
+        {% else %}
+            <div class="profile-avatar-placeholder">
+                <i class="fa fa-user"></i>
+            </div>
+        {% endif %}
+    </div>
+
+    <form class="profile-edit-form" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ edit_form.as_p }}
+
+        <div class="profile-actions">
+            <input class="btn btn-save-profile" type="submit" value="Сохранить">
+            <a href="{% url 'main' %}" class="btn btn-back-home">На главную</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

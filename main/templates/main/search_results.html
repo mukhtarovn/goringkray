@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block menu %}
+<div class="hero-white">
+    <div class="top-bar">
+        <div class="logo-left">
+            <a href="{% url 'main' %}">
+                <img src="{% static 'img/gorniy_kray_logo.png' %}" alt="Горный край">
+            </a>
+        </div>
+        {% include 'main/inc/inc_main_menu.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="site-section">
+    <div class="page-header">
+        <h1 class="page-title">Результаты поиска</h1>
+        <p class="page-subtitle">Найденные товары по вашему запросу.</p>
+    </div>
+
+    <div class="search-results-card">
+        {% if result %}
+            <div class="search-table-wrap">
+                <table class="table search-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Фото</th>
+                            <th>Бренд</th>
+                            <th>Модель</th>
+                            <th>Артикул</th>
+                            <th>Цена</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for res in result %}
+                            <tr class="table_search">
+                                <td class="search-image-cell">
+                                    <a href="{% url 'products:product' res.pk %}">
+                                        <img src="{{ res.image.url }}" alt="{{ res.name }}" class="search-product-image">
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'products:product' res.pk %}" class="search-link">
+                                        {{ res.category }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'products:product' res.pk %}" class="search-link search-name">
+                                        {{ res.name }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'products:product' res.pk %}" class="search-link">
+                                        {{ res.article }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'products:product' res.pk %}" class="search-link search-price">
+                                        {{ res.price }} руб.
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'basket:add' res.pk %}" class="search-cart-btn">
+                                        В корзину
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-search">
+                <h3>Ничего не найдено</h3>
+                <p>Попробуйте изменить запрос или перейти в каталог.</p>
+                <a href="{% url 'products:index' %}" class="search-cart-btn">
+                    Перейти в каталог
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

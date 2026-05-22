@@ -1,0 +1,122 @@
+{%extends 'main/base.html'%}
+{%load static%}
+{%block menu%}
+<meta name="description" content="Скидки и акции на интерьерные светильники (люстры, бра, торшеры, настольные лампы и тд"/>
+    <div class="hero-white">
+    <div class="top-bar">
+        <div class="logo-left">
+            <img src="{% static 'img/gorniy_kray_logo.png' %}" alt="Горный край">
+        </div>
+
+        {% include 'main/inc/inc_main_menu.html' %}
+    </div>
+</div>
+{%endblock%}
+
+{%block content%}
+    <div class="detalis">
+        <div class="type-menu clearfix">
+			{%include 'main/inc/inc_type_menu.html'%}
+				</div>
+        <div class="links clearfix">
+            {%include 'main/inc/inc_categories_menu.html'%}
+        </div>
+
+        <div class="products_list">
+            <div class="title clearfix">
+                <h2>
+                    Категория: "{{category.name|title}}" ({{category.description}})
+                </h2>
+            </div>
+            <div aria-label="Page navigation example">
+                    <ul class="pagination">
+                          {% if products.has_previous %}
+                        <li class="page-item"><a class="page-link" href="{% url 'products:sales_page' 1 %}{{q}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="{% url 'products:sales_page' products.previous_page_number%}{{q}}">{{products.previous_page_number}}</a></li>
+                          {% endif %}
+                        <li class="page-item"><a class="page-link" href="#" style="font-size: 22px;">{{products.number}}</a></li>
+                          {% if products.has_next %}
+                        <li class="page-item"><a class="page-link" href="{% url 'products:sales_page' products.next_page_number %}{{q}}">{{products.next_page_number}}</a></li>
+                       <li class="page-item"style="margin-left:5px;">
+                          <a class="page-link"  href="{% url 'products:sales_page' last_page %}{{q}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;{{last_page}}&raquo;</span>
+                          </a>
+                        </li>
+                            {% endif %}
+                      </ul>
+                    </div>
+            <div class="category-products clearfix">
+
+                {%for product in products%}
+                <div class="block">
+                    <div class="card" style="width: 20rem; min-height: 105%;">
+                      <a style="display:block; margin:auto; margin-top: 0px;" href="{%url 'products:product' product.pk%}"><img style="max-width: 270px; max-height: 270px;" src="{{product.image.url}}" alt="{{product.name}}">
+                      </a>
+                      <div class="text" style="position:absolute; bottom:0; margin-left: 1rem;">
+                            <h4>{{product.category}} ({{product.category.description}})</h4>
+                          <h6>{{product.article}}. {{product.name| truncatewords:3}}</h6>
+                          {%if product.sale_price%}
+                            <p style="margin-bottom:0rem"><span style="text-decoration: line-through">{{product.price}} руб</span>
+                                <span style="color:red">{{product.sale_price}} руб</span></p>
+                          {%else%}
+                            <p style="margin-bottom:0rem">{{product.price}} руб</p>
+                          {%endif%}
+                      </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                          {% if products.has_previous %}
+                        <li class="page-item"><a class="page-link" href="{% url 'products:sales_page' 1 %}{{q}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="{% url 'products:sales_page' products.previous_page_number %}{{q}}">{{products.previous_page_number}}</a></li>
+                          {% endif %}
+                        <li class="page-item"><a class="page-link" href="#" style="font-size: 22px;">{{products.number }}</a></li>
+                          {% if products.has_next %}
+                        <li class="page-item"><a class="page-link" href="{% url 'products:sales_page' products.next_page_number %}{{q}}">{{products.next_page_number}}</a></li>
+                        <li class="page-item"style="margin-left:5px;">
+                          <a class="page-link"  href="{% url 'products:sales_page' last_page %}{{q}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;{{last_page}}&raquo;</span>
+                          </a>
+                        </li>
+                            {% endif %}
+                      </ul>
+                    </nav>
+            <a href="#" title="Вернуться к началу" class="topbutton">^Наверх</a>
+        </div>
+
+    </div>
+    <div class="" style="display: flex; margin-left:10%">
+        <div style="margin-top: 30px; margin-bottom: 30px">
+	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+		<a href="{%url 'products:sales'%}"><img src="/static/img/MAYTONI.jpg" width="80%" height="300px"></a>
+    </div>
+    <div class="carousel-item">
+		<a href="{%url 'products:sales'%}"><img src="/static/img/MAYTONI2.jpg" width="80%" height="300px"></a>
+    </div>
+	  <div class="carousel-item">
+		<a href="{%url 'products:sales'%}"><img src="/static/img/MAYTONI3.jpg" width="80%" height="300px"></a>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+
+    </div>
+{%endblock%}

@@ -1,0 +1,74 @@
+{%extends 'main/base.html'%}
+{%load static%}
+{%block menu%}
+<meta name="description" content="Каталог, продукция. Интерьерные светильники, Люстры, Торшеры, Бра, Люстры, Настольные лампы, Уличное освещение,
+Трековый свет, Офисное освещение, Электротовары"/>
+		<div class="hero-white">
+			<div class="header clearfix">
+				<p class="logo">ЛУЧИ СВЕТА</p>
+				{%include 'main/inc/inc_main_menu.html'%}
+			</div>
+		</div>
+{%endblock%}
+{%block content%}
+		<div class="details">
+			<div class="type-menu clearfix">
+			{%include 'main/inc/inc_type_menu.html'%}
+				</div>
+
+			<div class="details-products">
+				<div class="details-slider">
+					<div class="slider-product">
+						<img src="{{hot_product.image.url}}" height="500px">
+					</div>
+				</div>
+
+				<div class="description">
+					<h3 class="big-bold">{{hot_product.category}}</h3>
+					<h3 class="red">горячее предложение</h3>
+					{%if hot_product.sale_price%}
+					<p class="price"> <span style="text-decoration:line-through">{{hot_product.price}} </span></p>
+					<p class="price" style="color: red"> {{hot_product.sale_price}} <span>руб</span></p>
+					{%else%}
+						<p class="price">{{hot_product.price}} <span>руб</span></p>
+					{%endif%}
+					<a href="{%url 'basket:add' hot_product.pk%}" class="red-button">
+						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</a>
+					<div class="description-text">
+						<p>{{hot_product.name}}</p>
+						<p>{{hot_product.type}} серии {{hot_product.series}} Прекрасно дополнит
+						и подчеркнет изысканый стиль Вашего интерьера. Цвет - {{hot_product.color}},
+							количество ламп - {{hot_product.lamps}} шт. ({{hot_product.lamps_type}})
+							мощьность {{hot_product.power}} Вт
+						</p>
+
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="related">
+				<div class="title clearfix">
+					<h2>Похожие продукты</h2>
+					<a class="explore" href="{%url 'products:category' hot_product.category.pk%}">показать все <img src="/static/img/arrow.png" alt=""></a>
+				</div>
+				<div class="related-products clearfix">
+					{%for product in same_product%}
+						<div class="block">
+							<a href="{%url 'products:product' product.pk%}"><img src="{{product.image.url}}" alt="{{product.name}}"
+																				 height="350px">
+								<div class="text">
+									<img src="/static/img/icon-hover.png" alt="img">
+									<h4>{{product.name}}</h4>
+									<p>{{product.price}}</p>
+								</div>
+							</a>
+						</div>
+					{%endfor%}
+				</div>
+
+			</div>
+		</div>
+{%endblock%}

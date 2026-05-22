@@ -1,0 +1,11 @@
+<nav class="catalog-nav navbar navbar-expand-lg">
+    <div class="container-fluid px-0">
+        <div class="catalog-nav-inner">
+            {% for item in type_menu %}
+                <a class="catalog-nav-btn" href="{% url 'products:type' item.pk %}">
+                    {{ item }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>

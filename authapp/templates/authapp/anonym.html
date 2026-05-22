@@ -1,0 +1,39 @@
+{% extends "authapp/base.html" %}
+{% load static %}
+
+{% block content %}
+<meta name="description" content="Горный край. Анонимный пользователь"/>
+
+<div class="auth-form-page">
+    <div class="auth-form-header">
+        <h1>Оформление заказа</h1>
+        <p>Введите данные для доставки. Регистрация не требуется.</p>
+    </div>
+
+    <form action="{% url 'auth:anonym' %}" method="post" class="auth-form-custom">
+        {% csrf_token %}
+
+        <label>Имя</label>
+        <input name="name" type="text" placeholder="Иванов Иван">
+
+        <label>Адрес доставки</label>
+        <textarea name="address" rows="3"
+                  placeholder="Москва, ул. Эдварда Грига, д.5, кв. 188"></textarea>
+
+        <label>Телефон</label>
+        <input name="phone" type="text" placeholder="+79296011776">
+
+        <div class="auth-buttons">
+            <button type="submit" class="btn auth-btn-primary">Отправить заказ</button>
+        </div>
+
+        <div class="auth-links auth-links-center">
+            <a href="{% url 'main' %}">На главную</a>
+        </div>
+    </form>
+
+    <div class="auth-info-text">
+        <p>В ближайшее время наш менеджер свяжется с вами для уточнения деталей заказа.</p>
+    </div>
+</div>
+{% endblock %}

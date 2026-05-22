@@ -1,0 +1,53 @@
+{% load static %}
+
+<div class="orders-container">
+
+    <div class="orders-header">
+        Ваши заказы,
+        {% if user.first_name %}
+            {{ user.first_name|title }}
+        {% else %}
+            Пользователь
+        {% endif %}
+    </div>
+
+    {% if object_list %}
+        <div class="orders-grid">
+            {% for item in object_list %}
+                {% if item.is_active %}
+                    <div class="order-card">
+
+                        <div class="order-top">
+                            <div class="order-id">Заказ #{{ item.pk }}</div>
+                            <div class="order-status">{{ item.get_status_display }}</div>
+                        </div>
+
+                        <div class="order-dates">
+                            <div>Создан: {{ item.created|date:"d.m.Y H:i" }}</div>
+                            <div>Обновлен: {{ item.updated|date:"d.m.Y H:i" }}</div>
+                        </div>
+
+                        {% if item.status == 'FM' %}
+                            <div class="order-actions">
+                                <a href="{% url 'orderapp:order_forming_complete' item.pk %}" class="btn btn-success">Купить</a>
+                                <a href="{% url 'orderapp:order_update' item.pk %}" class="btn btn-secondary">Редактировать</a>
+                                <a href="{% url 'orderapp:order_delete' item.pk %}" class="btn btn-danger">Удалить</a>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="orders-empty">
+            У вас пока нет заказов
+        </div>
+    {% endif %}
+
+    <div class="orders-bottom">
+        <a href="{% url 'main' %}" class="btn btn-light">На главную</a>
+        <a href="{% url 'orderapp:order_create' %}" class="btn btn-primary">Новый заказ</a>
+    </div>
+
+</div>

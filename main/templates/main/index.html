@@ -1,0 +1,257 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<meta name="description" content="Горный край — интернет-магазин эко продукции из Дагестана. Натуральные продукты, фермерская продукция, напитки, доставка и акции.">
+
+<section class="hero-main">
+
+   {% block menu %}
+<div class="hero-white">
+    <div class="top-bar">
+        <div class="logo-left">
+            <a href="{% url 'main' %}">
+                <img src="{% static 'img/gorniy_kray_logo.png' %}" alt="Горный край">
+            </a>
+        </div>
+
+        {% include 'main/inc/inc_main_menu.html' %}
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    <div class="hero-content container">
+        <div class="hero-left">
+            <div class="hero-badge">Эко продукция из Дагестана</div>
+            <h1 class="hero-title">
+                Натуральные продукты
+                <span>с заботой о вашей семье</span>
+            </h1>
+            <p class="hero-text">
+                Свежая фермерская продукция, напитки и натуральные товары
+                из Дагестана в современном и удобном интернет-магазине.
+            </p>
+            <div class="hero-actions">
+                <a href="{% url 'products:category' 0 %}" class="hero-btn hero-btn-dark">Перейти в каталог</a>
+                <a href="{% url 'products:category' 0 %}" class="hero-btn hero-btn-light">Популярные товары</a>
+            </div>
+
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <strong>100%</strong>
+                    <span>натуральный акцент</span>
+                </div>
+                <div class="hero-feature">
+                    <strong>Halal</strong>
+                    <span>понятное происхождение</span>
+                </div>
+                <div class="hero-feature">
+                    <strong>Fast</strong>
+                    <span>быстрая доставка</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-card">
+                <div class="hero-card-bg">
+                    <div class="hero-overlay">
+                        <div class="hero-brand-mini">ГОРНЫЙ КРАЙ</div>
+                        <div class="hero-card-center">
+                            <div class="hero-card-subtitle">С заботой о вас и вашей семье</div>
+                            <div class="hero-card-title">
+                                Экологично.<br>
+                                Стильно.<br>
+                                <span>По-настоящему.</span>
+                            </div>
+                        </div>
+                        <div class="hero-card-bottom">
+                            <div class="hero-note">
+                                Прямые поставки от производителей и фермеров
+                            </div>
+                            <div class="hero-note">
+                                Чистые продукты и современный подход к магазину
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section-wrap">
+    <div class="section-head">
+        <div>
+            <div class="section-kicker">Категории</div>
+            <h2 class="section-title">Каталог, который выглядит вкусно</h2>
+        </div>
+        <a href="{% url 'products:category' 0 %}" class="section-link">Смотреть все</a>
+    </div>
+
+    <div class="category-grid">
+
+    <a href="{% url 'products:type' 7 %}" class="category-card">
+        <img src="{% static 'img/chicken_category.jpg'%}" alt="Мясо цыпленка">
+        <div class="category-card-body">
+            <h3>Мясо цыпленка</h3>
+            <p>Качественная продукция из курицы на зерновом откорме.</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 8 %}" class="category-card">
+        <img src="{% static 'img/sosage_category.jpg' %}" alt="Колбасные изделия">
+        <div class="category-card-body">
+            <h3>Колбасные изделия</h3>
+            <p>Натуральные колбасы и мясные деликатесы.</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 9 %}" class="category-card">
+        <img src="{% static 'img/polufabrikati_category.jpg' %}" alt="Полуфабрикаты">
+        <div class="category-card-body">
+            <h3>Полуфабрикаты</h3>
+            <p>Готовые решения для быстрого приготовления.</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 1 %}" class="category-card">
+        <img src="{% static 'img/category_milk.jpg'%}" alt="Молочная продукция">
+        <div class="category-card-body">
+            <h3>Молочная продукция</h3>
+            <p>Натуральная молочная продукция.</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 4 %}" class="category-card">
+        <img src="{% static 'img/category_grains.jpg' %}" alt="Мука и крупы">
+        <div class="category-card-body">
+            <h3>Мука и крупы</h3>
+            <p>Качественная мука и полезные крупы.</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 5 %}" class="category-card">
+        <img src="{% static 'img/category_canned.jpg' %}" alt="Консервация">
+        <div class="category-card-body">
+            <h3>Консервация</h3>
+            <p>Фермерские заготовки.</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 3 %}" class="category-card">
+        <img src="{% static 'img/category_desserts.jpg' %}" alt="Десерты">
+        <div class="category-card-body">
+            <h3>Десерты</h3>
+            <p>Сладости и угощения к чаю</p>
+        </div>
+    </a>
+
+    <a href="{% url 'products:type' 6 %}" class="category-card">
+        <img src="{% static 'img/category_drinks.jpg' %}" alt="Напитки">
+        <div class="category-card-body">
+            <h3>Напитки</h3>
+            <p>Соки, вода и натуральные напитки</p>
+        </div>
+    </a>
+
+</div>
+</section>
+
+<section class="section-wrap popular-section" id="popular">
+    <div class="section-head">
+        <div>
+            <div class="section-kicker">Популярное</div>
+            <h2 class="section-title">Популярные товары</h2>
+        </div>
+        <a href="{% url 'products:category' 0 %}" class="section-link">Показать все</a>
+    </div>
+
+    <div class="product-grid">
+        {% for random_product in random_products %}
+        <div class="product-card">
+            <a href="{% url 'products:product' random_product.pk %}" class="product-card-link">
+                <div class="product-image-wrap">
+                    <img src="{{ random_product.image.url }}" alt="{{ random_product.name }}">
+                    <span class="product-badge">ЭКО</span>
+                </div>
+                <div class="product-body">
+                    <div class="product-category">{{ random_product.category.name }}</div>
+                    <h3 class="product-title">{{ random_product.name }}</h3>
+                    <div class="product-footer">
+                        <span class="product-price">{{ random_product.price }}</span>
+                        <span class="product-btn">Подробнее</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section-wrap why-section">
+    <div class="section-head center-head">
+        <div>
+            <div class="section-kicker">Почему выбирают нас</div>
+            <h2 class="section-title">Больше бренда, меньше старого шаблона</h2>
+        </div>
+    </div>
+
+    <div class="why-grid">
+        <div class="why-card">
+            <h3>Натуральные продукты</h3>
+            <p>Только качественная и экологически чистая продукция.</p>
+        </div>
+        <div class="why-card">
+            <h3>Халяль</h3>
+            <p>Продукция соответствует требованиям и стандартам халяль.</p>
+        </div>
+        <div class="why-card">
+            <h3>Прямые поставки</h3>
+            <p>Мы работаем напрямую с производителями и фермерскими хозяйствами.</p>
+        </div>
+        <div class="why-card">
+            <h3>Вкус Дагестана</h3>
+            <p>Отборные продукты из самого сердца региона.</p>
+        </div>
+    </div>
+</section>
+
+<section id="partners" class="section-wrap partners-section">
+
+    <div class="section-head center-head">
+        <div>
+            <div class="section-kicker">Партнеры</div>
+            <h2 class="section-title">
+                Наши бренды и партнеры
+            </h2>
+        </div>
+    </div>
+
+    <div class="category-grid">
+
+        {% for partner in partners %}
+
+            <div class="category-card text-center">
+
+                {% if partner.logo %}
+                    <img src="{{ partner.logo.url }}"
+                         alt="{{ partner.name }}"
+                         style="height:120px;
+                                width:100%;
+                                object-fit:contain;
+                                padding:20px;">
+                {% endif %}
+
+                <div class="category-card-body">
+                    <h3>{{ partner.name }}</h3>
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

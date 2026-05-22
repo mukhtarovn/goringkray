@@ -1,0 +1,20 @@
+{% extends 'basketapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="basket-page-inner">
+    <div class="basket-list-wrap">
+        {% include 'basketapp/inc/inc_basket.html' %}
+    </div>
+
+    <div class="basket-actions">
+        <a href="{% url 'main' %}" class="basket-action-btn basket-action-secondary">
+            На главную
+        </a>
+
+        <a href="{% url 'orderapp:order_create' %}" class="basket-action-btn basket-action-primary">
+            Оформить заказ
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block menu %}
+<meta name="description" content="Лучи Света. Контакты. Информация. Доставка"/>
+
+<div class="hero-white">
+    <div class="top-bar">
+        <div class="logo-left">
+            <img src="{% static 'img/gorniy_kray_logo.png' %}" alt="Горный край">
+        </div>
+
+        {% include 'main/inc/inc_main_menu.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="site-section">
+    <div class="page-header">
+        <h1 class="page-title">Наши контакты</h1>
+        <p class="page-subtitle">Свяжитесь с нами удобным способом или ознакомьтесь с условиями доставки.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="info-card">
+            <div class="info-card-icon">
+                <i class="fa fa-map-marker">
+            </div>
+
+            <h3 class="info-card-title">Москва</h3>
+
+            <div class="info-block">
+                <h5>Телефон</h5>
+                <p>
+                    <img src="{% static 'img/telephone.svg' %}" style="margin-right: 5px">
+                    <img src="{% static 'img/whatsapp.svg' %}" style="margin-right: 5px">
+                    +7-928-807-2407
+                </p>
+            </div>
+
+            <div class="info-block">
+                <h5>Email</h5>
+                <p>muhtarova1961@mail.ru</p>
+            </div>
+
+            <div class="info-block">
+                <h5>Адрес</h5>
+                <p>Москва, пос. Коммунарка, ул. Липовый парк, д. 6</p>
+            </div>
+        </div>
+
+        <div class="info-card info-card-wide">
+            <div class="info-card-icon">
+                <i class="fa fa-truck"></i>
+            </div>
+
+            <h3 class="info-card-title">Доставка и Оплата</h3>
+
+            <div class="delivery-text">
+<p>В пределах района «Скандинавия» (север, центр, юг)</p>
+<p>- при покупке товара свыше 2 тысяч рублей бесплатно</p>
+<p>- при покупке товара до 2 тысяч руб. включительно – 150 руб.</p>
+<p>По другим районам Москвы доставка осуществляется по тарифам
+«Яндекс-доставка»</p>
+<p>Оплата:</p>
+<p>- банковский терминал</p>
+<p>- наличные</p>
+<p>Стоимость весового товара (мясо цыпленка, колбасные изделия)
+может незначительно отличаться от стоимости, указанной в
+каталоге, и зависит от веса конкретного продукта.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

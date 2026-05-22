@@ -1,0 +1,98 @@
+{%load static%}
+{% if basket_items %}
+    <div class="basket-items-grid">
+        {% for item in basket_items %}
+            <div class="basket-item-card">
+                <div class="basket-item-image-wrap">
+                    <a href="{% url 'products:product' item.product.pk %}">
+{% if item.product.image %}
+    <img src="{{ item.product.image.url }}" alt="">
+{% else %}
+    <img src="{% static 'img/no-image.png' %}" alt="">
+{% endif %}                       
+                    </a>
+                </div>
+
+                <div class="basket-item-info">
+                    <div class="basket-item-category">{{ item.product.category.name }}</div>
+                    <div class="basket-item-name">{{ item.product.name }}</div>
+                </div>
+
+                <div class="basket-item-qty">
+                    <label class="basket-item-label">Количество</label>
+                    <input type="number" name="{{ item.pk }}" min="0" value="{{ item.quantity }}" class="basket-qty-input">
+                </div>
+
+                <div class="basket-item-price">
+                    <span class="basket-item-label">Стоимость</span>
+                    <span class="basket-item-cost" data-price="{{ item.product.price }}">
+    {{ item.product_cost }} руб
+</span>
+                </div>
+
+                <div class="basket-item-remove">
+                    <a href="{% url 'basket:remove' item.pk %}" class="basket-remove-btn" title="Удалить">
+                        <img src="{% static 'img/trash.svg' %}" alt="Удалить">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <div class="basket-summary-card">
+        <div class="basket-summary-text">
+            В корзине <strong id="total-quantity">{{ basket_items.0.total_quantity }}</strong>
+            {% if basket_items.0.total_quantity == 1 %}
+                товар
+            {% else %}
+                товаров
+            {% endif %}
+            на сумму <strong id="total-cost">{{ basket_items.0.total_cost }} руб</strong>
+        </div>
+    </div>
+{% else %}
+    <div class="basket-empty-state">
+        <h3>Корзина пока пуста</h3>
+        <p>Добавьте товары из каталога, чтобы оформить заказ.</p>
+    </div>
+{% endif %}
+<script>
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+document.querySelectorAll('.basket-qty-input').forEach(input => {
+    input.addEventListener('change', function () {
+        const itemId = this.name;
+        const quantity = this.value;
+
+        fetch(`/basket/update/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `quantity=${quantity}`
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (data.deleted) {
+                    location.reload();
+                    return;
+                }
+
+                const card = this.closest('.basket-item-card');
+                card.querySelector('.basket-item-cost').textContent =
+                    data.item_total + ' руб';
+
+                document.getElementById('total-quantity').textContent =
+                    data.total_quantity;
+
+                document.getElementById('total-cost').textContent =
+                    data.total_cost;
+            }
+        });
+    });
+});
+</script>

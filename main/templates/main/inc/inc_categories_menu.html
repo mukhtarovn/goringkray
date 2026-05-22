@@ -1,0 +1,104 @@
+<div class="catalog-filter">
+    <form method="get" class="catalog-filter-form">
+
+        <div class="filter-block">
+            <h3 class="filter-title">Поиск</h3>
+            <input
+                type="text"
+                name="search"
+                class="filter-input"
+                placeholder="Например: колбаса, сыр, урбеч"
+                value="{{ request.GET.search }}"
+            >
+        </div>
+
+        <div class="filter-block">
+            <h3 class="filter-title">Бренд</h3>
+            <select name="brand" class="filter-select">
+                <option value="">Все бренды</option>
+                {% for item in links_menu %}
+                    {% if item.name != "Nowodvorski" and item.name != "Evronomer" and item.name != "Werkel" %}
+                        <option value="{{ item.pk }}"
+                            {% if request.GET.brand == item.pk|stringformat:"s" %}selected{% endif %}>
+                            {{ item.name }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-block">
+            <h3 class="filter-title">Цена</h3>
+
+            <div class="filter-price-row">
+                <input
+                    name="price_min"
+                    type="number"
+                    class="filter-input"
+                    placeholder="от"
+                    value="{{ request.GET.price_min }}"
+                >
+                <span class="filter-price-label">₽</span>
+            </div>
+
+            <div class="filter-price-row">
+                <input
+                    name="price_max"
+                    type="number"
+                    class="filter-input"
+                    placeholder="до"
+                    value="{{ request.GET.price_max }}"
+                >
+                <span class="filter-price-label">₽</span>
+            </div>
+        </div>
+
+        <div class="filter-block">
+            <h3 class="filter-title">Сортировка</h3>
+
+            <label class="filter-check">
+                <input type="radio" name="sort" value="price"
+                    {% if request.GET.sort == "price" %}checked{% endif %}>
+                <span>Сначала дешевле</span>
+            </label>
+
+            <label class="filter-check">
+                <input type="radio" name="sort" value="-price"
+                    {% if request.GET.sort == "-price" %}checked{% endif %}>
+                <span>Сначала дороже</span>
+            </label>
+
+            <label class="filter-check">
+                <input type="radio" name="sort" value="name"
+                    {% if request.GET.sort == "name" %}checked{% endif %}>
+                <span>По названию А–Я</span>
+            </label>
+        </div>
+
+        <div class="filter-block">
+            <h3 class="filter-title">Покупателям</h3>
+
+            <label class="filter-check">
+                <input type="checkbox" name="sale" value="1"
+                    {% if request.GET.sale == "1" %}checked{% endif %}>
+                <span>Только со скидкой</span>
+            </label>
+
+            <label class="filter-check">
+                <input type="checkbox" name="in_stock" value="1"
+                    {% if request.GET.in_stock == "1" %}checked{% endif %}>
+                <span>Только в наличии</span>
+            </label>
+        </div>
+
+        <div class="filter-actions">
+    <button type="submit" class="filter-btn filter-btn-primary">Применить</button>
+
+    {% if category %}
+        <a href="{% url 'products:category' category.pk %}" class="filter-btn filter-btn-light">Сбросить</a>
+    {% else %}
+        <a href="{% url 'products:category' 0 %}" class="filter-btn filter-btn-light">Сбросить</a>
+    {% endif %}
+</div>
+    </form>
+</div>

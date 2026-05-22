@@ -1,0 +1,219 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block menu %}
+<meta name="description" content="{{ types.name }}. Интернет магазин света. Купить люстры, светильники, торшеры, бра и тд"/>
+
+<div class="hero-white">
+    <div class="top-bar">
+        <div class="logo-left">
+            <img src="{% static 'img/gorniy_kray_logo.png' %}" alt="Горный край">
+        </div>
+        {% include 'main/inc/inc_main_menu.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="catalog-page">
+
+    <div class="type-menu-wrap">
+        <div class="type-menu clearfix">
+            {% include 'main/inc/inc_type_menu.html' %}
+        </div>
+    </div>
+
+    <div class="catalog-layout">
+
+        <aside class="catalog-sidebar">
+            <div class="catalog-filter">
+                <form method="get" class="catalog-filter-form">
+
+                    <div class="filter-block">
+                        <h3 class="filter-title">Поиск</h3>
+                        <input
+                            type="text"
+                            name="search"
+                            class="filter-input"
+                            placeholder="Например: люстра, бра, светильник"
+                            value="{{ request.GET.search }}"
+                        >
+                    </div>
+
+                    <div class="filter-block">
+                        <h3 class="filter-title">Цена</h3>
+
+                        <div class="filter-price-row">
+                            <input
+                                name="price_min"
+                                type="number"
+                                class="filter-input"
+                                placeholder="от"
+                                value="{{ request.GET.price_min }}"
+                            >
+                            <span class="filter-price-label">₽</span>
+                        </div>
+
+                        <div class="filter-price-row">
+                            <input
+                                name="price_max"
+                                type="number"
+                                class="filter-input"
+                                placeholder="до"
+                                value="{{ request.GET.price_max }}"
+                            >
+                            <span class="filter-price-label">₽</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-block">
+                        <h3 class="filter-title">Сортировка</h3>
+
+                        <label class="filter-check">
+                            <input type="radio" name="sort" value="price"
+                                {% if request.GET.sort == "price" %}checked{% endif %}>
+                            <span>Сначала дешевле</span>
+                        </label>
+
+                        <label class="filter-check">
+                            <input type="radio" name="sort" value="-price"
+                                {% if request.GET.sort == "-price" %}checked{% endif %}>
+                            <span>Сначала дороже</span>
+                        </label>
+
+                        <label class="filter-check">
+                            <input type="radio" name="sort" value="name"
+                                {% if request.GET.sort == "name" %}checked{% endif %}>
+                            <span>По названию А–Я</span>
+                        </label>
+                    </div>
+
+                    <div class="filter-block">
+                        <h3 class="filter-title">Фильтры</h3>
+
+                        <label class="filter-check">
+                            <input type="checkbox" name="sale" value="1"
+                                {% if request.GET.sale == "1" %}checked{% endif %}>
+                            <span>Только со скидкой</span>
+                        </label>
+
+                        <label class="filter-check">
+                            <input type="checkbox" name="in_stock" value="1"
+                                {% if request.GET.in_stock == "1" %}checked{% endif %}>
+                            <span>Только в наличии</span>
+                        </label>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button type="submit" class="filter-btn filter-btn-primary">Применить</button>
+                        <a href="{% url 'products:type' types.pk %}" class="filter-btn filter-btn-light">Сбросить</a>
+                    </div>
+                </form>
+            </div>
+        </aside>
+
+        <section class="catalog-main">
+            <div class="catalog-title">
+                <h2>
+                    Категория: {{ types.parent_type }} {% if types.name %}> {{ types.name|title }}{% endif %}
+                </h2>
+            </div>
+
+            <div class="catalog-pagination">
+                <ul class="pagination">
+                    {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk 1 %}{{ q }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk products.previous_page_number %}{{ q }}">
+                                {{ products.previous_page_number }}
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item">
+                        <a class="page-link current-page" href="#">{{ products.number }}</a>
+                    </li>
+
+                    {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk products.next_page_number %}{{ q }}">
+                                {{ products.next_page_number }}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk last_page %}{{ q }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;{{ last_page }}&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="products">
+                {% for product in products %}
+                    <div class="block">
+                        <div class="product-card">
+                            <a class="product-image" href="{% url 'products:product' product.pk %}">
+{% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% else %}
+    <img src="/media/no-image.jpg" alt="{{ product.name }}">
+{% endif %}                               
+                            </a>
+
+                            <div class="product-info">
+                                <h4>{{ product.name|truncatewords:4 }}</h4>
+                                <h6>{{ product.category }}</h6>
+
+                                {% if product.sale_price %}
+                                    <p class="price">
+                                        <span class="old-price">{{ product.price }} руб</span>
+                                        <span class="sale-price">{{ product.sale_price }} руб</span>
+                                    </p>
+                                {% else %}
+                                    <p class="price">{{ product.price }} руб</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="catalog-pagination bottom-pagination">
+                <ul class="pagination">
+                    {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk products.previous_page_number %}{{ q }}">
+                                {{ products.previous_page_number }}
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item">
+                        <a class="page-link current-page" href="#">{{ products.number }}</a>
+                    </li>
+
+                    {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk products.next_page_number %}{{ q }}">
+                                {{ products.next_page_number }}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'products:type_page' types.pk last_page %}{{ q }}">
+                                <span aria-hidden="true">&raquo;{{ last_page }}&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <a href="#" title="Вернуться к началу" class="topbutton">^Наверх</a>
+        </section>
+    </div>
+</div>
+{% endblock %}
