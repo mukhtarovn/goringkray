@@ -157,14 +157,4 @@ LOGIN_URL = '/auth/login/'
 #EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_USE_TLS = False
-
-EMAIL_HOST_USER = 'gorniykray05@mail.ru'
-EMAIL_HOST_PASSWORD = 'K8fniDFr79h7c8LS7AHy'
-
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

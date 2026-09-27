@@ -1,47 +1,72 @@
 {% load static %}
-
-<div class="orders-container">
+<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+<div class="orders-page">
 
     <div class="orders-header">
-        Ваши заказы,
-        {% if user.first_name %}
-            {{ user.first_name|title }}
-        {% else %}
-            Пользователь
-        {% endif %}
+        <h2>
+            Ваши заказы
+            {% if user.first_name %}
+                , {{ user.first_name|title }}
+            {% else %}
+                , Пользователь
+            {% endif %}
+        </h2>
+        <p class="orders-subtitle">История заказов и их статус</p>
     </div>
 
     {% if object_list %}
         <div class="orders-grid">
+
             {% for item in object_list %}
                 {% if item.is_active %}
                     <div class="order-card">
 
-                        <div class="order-top">
+                        <div class="order-card-header">
                             <div class="order-id">Заказ #{{ item.pk }}</div>
-                            <div class="order-status">{{ item.get_status_display }}</div>
+
+                            <!-- STATUS BADGE -->
+                            <div class="status-badge status-{{ item.status }}">
+                                {{ item.get_status_display }}
+                            </div>
                         </div>
 
-                        <div class="order-dates">
-                            <div>Создан: {{ item.created|date:"d.m.Y H:i" }}</div>
-                            <div>Обновлен: {{ item.updated|date:"d.m.Y H:i" }}</div>
+                        <div class="order-info">
+                            <div class="order-info-row">
+                                <span>Создан:</span>
+                                <strong>{{ item.created|date:"d.m.Y H:i" }}</strong>
+                            </div>
+
+                            <div class="order-info-row">
+                                <span>Обновлен:</span>
+                                <strong>{{ item.updated|date:"d.m.Y H:i" }}</strong>
+                            </div>
                         </div>
 
                         {% if item.status == 'FM' %}
                             <div class="order-actions">
-                                <a href="{% url 'orderapp:order_forming_complete' item.pk %}" class="btn btn-success">Купить</a>
-                                <a href="{% url 'orderapp:order_update' item.pk %}" class="btn btn-secondary">Редактировать</a>
-                                <a href="{% url 'orderapp:order_delete' item.pk %}" class="btn btn-danger">Удалить</a>
+                                <a href="{% url 'orderapp:order_forming_complete' item.pk %}" class="btn btn-success">
+                                    Купить
+                                </a>
+
+                                <a href="{% url 'orderapp:order_update' item.pk %}" class="btn btn-outline-primary">
+                                    Редактировать
+                                </a>
+
+                                <a href="{% url 'orderapp:order_delete' item.pk %}" class="btn btn-outline-danger">
+                                    Удалить
+                                </a>
                             </div>
                         {% endif %}
 
                     </div>
                 {% endif %}
             {% endfor %}
+
         </div>
     {% else %}
         <div class="orders-empty">
-            У вас пока нет заказов
+            <h4>У вас пока нет заказов</h4>
+            <p>Создайте первый заказ</p>
         </div>
     {% endif %}
 
