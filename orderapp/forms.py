@@ -4,22 +4,31 @@ from orderapp.models import Order, OrderItem
 
 
 class OrderForm(forms.ModelForm):
+
     class Meta:
         model = Order
-        exclude = ('user',)
+        exclude = ('user', 'session_key')
 
-        def __init__(self, *args, **kwargs):
-            super ().__init__ (*args, **kwargs)
-            for field_name, field in self.fields.items ():
-                field.widget.attrs['class'] = "form-control"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
 
 class OrderItemForm(forms.ModelForm):
-    price = forms.CharField(label='цена', required=False)
+
+    price = forms.CharField(
+        label='цена',
+        required=False
+    )
+
     class Meta:
         model = OrderItem
-        exclude = ()
+        fields = ('product', 'quantity')
 
-        def __init__(self, *args, **kwargs):
-            super ().__init__ (*args, **kwargs)
-            for field_name, field in self.fields.items ():
-                field.widget.attrs['class'] = "form-control"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'

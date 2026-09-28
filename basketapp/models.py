@@ -1,17 +1,54 @@
+from django.conf import settings
 from django.db import models
+
 from main.models import Product
-from taxi import settings
 
 
 class Basket(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
-    quantity = models.PositiveIntegerField(verbose_name='Количество', default=0)
-    add_datetime = models.DateTimeField(auto_now_add=True, verbose_name='время')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Пользователь'
+    )
+
+    session_key = models.CharField(
+        max_length=40,
+        null=True,
+        blank=True,
+        db_index=True,
+        verbose_name='Сессия'
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        verbose_name='Продукт'
+    )
+
+    quantity = models.PositiveIntegerField(
+        verbose_name='Количество',
+        default=0
+    )
+
+    add_datetime = models.DateTimeField(
+        auto_now_add=True
+    )
 
     @staticmethod
-    def get_items(user):
-        return Basket.objects.filter(user=user).order_by('product__category')
+    def get_items(user=None, session_key=None):
+        if user is not None and user.is_authenticated:
+            return Basket.objects.filter(
+                user=user
+            ).order_by('product__category')
+
+        if session_key:
+            return Basket.objects.filter(
+                session_key=session_key
+            ).order_by('product__category')
+
+        return Basket.objects.none()
 
     @property
     def product_cost(self):
@@ -19,30 +56,48 @@ class Basket(models.Model):
 
     @property
     def total_quantity(self):
-        _items = Basket.objects.filter(user=self.user)
-        _totalquantity = sum(list(map(lambda x: x.quantity, _items)))
-        return _totalquantity
+        if self.user and self.user.is_authenticated:
+            items = Basket.objects.filter(user=self.user)
+        elif self.session_key:
+            items = Basket.objects.filter(session_key=self.session_key)
+        else:
+            items = Basket.objects.none()
+
+        return sum(item.quantity for item in items)
 
     @property
     def total_cost(self):
-        _items = Basket.objects.filter(user=self.user)
-        _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
+        if self.user and self.user.is_authenticated:
+            items = Basket.objects.filter(user=self.user)
+        elif self.session_key:
+            items = Basket.objects.filter(session_key=self.session_key)
+        else:
+            items = Basket.objects.none()
 
-        return _totalcost
+        return sum(item.product_cost for item in items)
 
     def __str__(self):
-        return f'{self.user} ({self.product} - {self.quantity})'
+        if self.user:
+            owner = str(self.user)
+        else:
+            owner = f'Гость {self.session_key}'
+
+        return f'{owner} ({self.product} - {self.quantity})'
+
     @staticmethod
     def get_product(user, product):
-        Basket.objects.filter(user=user, product=product)
+        return Basket.objects.filter(
+            user=user,
+            product=product
+        ).first()
 
     @classmethod
     def get_products_quantity(cls, user):
-        basket_items=cls.get_items(user)
-        basket_item_dic={}
-        [basket_item_dic.update({item.product: item.quantity}) for item in basket_items]
-        return basket_items
+        basket_items = cls.get_items(user=user)
 
-    def delete(self):
-        self.product.quantity += self.quantity
-        self.product.save()
+        basket_item_dic = {
+            item.product: item.quantity
+            for item in basket_items
+        }
+
+        return basket_item_dic
